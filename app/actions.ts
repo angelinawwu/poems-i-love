@@ -9,12 +9,19 @@ export async function checkPassword(password: string) {
 
 export async function getPoems() {
   try {
-    return await prisma.poem.findMany({
+    const poems = await prisma.poem.findMany({
       orderBy: { createdAt: 'desc' },
       select: { id: true, title: true, author: true }
     })
+    console.log(`[getPoems] Found ${poems.length} poems`)
+    return poems
   } catch (e) {
-    console.error("Error fetching poems:", e)
+    console.error("[getPoems] Error fetching poems:", e)
+    console.error("[getPoems] Error details:", e instanceof Error ? e.message : String(e))
+    // In production, we want to see the error, not silently return empty
+    if (process.env.NODE_ENV === 'production') {
+      console.error("[getPoems] This error will be visible in Vercel logs")
+    }
     return []
   }
 }
@@ -25,7 +32,7 @@ export async function getPoem(id: string) {
       where: { id }
     })
   } catch (e) {
-    console.error(`Error fetching poem ${id}:`, e)
+    console.error(`[getPoem] Error fetching poem ${id}:`, e)
     return null
   }
 }
