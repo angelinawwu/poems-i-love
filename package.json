@@ -7,7 +7,9 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "migrate:prod": "tsx scripts/migrate-to-prod.ts",
+    "schema:create": "tsx scripts/create-schema-turso.ts"
   },
   "dependencies": {
     "@libsql/client": "^0.8.1",
@@ -34,6 +36,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.0.3",
     "tailwindcss": "^4",
+    "tsx": "^4.19.3",
     "typescript": "^5"
   }
 }
