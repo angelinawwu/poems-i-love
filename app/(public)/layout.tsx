@@ -13,7 +13,7 @@ export default async function PublicLayout({
     <div className="flex flex-col md:flex-row min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <MobileNav poems={poems} />
       <Sidebar poems={poems} />
-      <main className="flex-1 p-8 md:p-16 lg:p-24 max-w-3xl mx-auto w-full relative">
+      <main className="flex-1 p-8 md:p-16 max-w-3xl mx-auto w-full relative">
         {children}
       </main>
     </div>
