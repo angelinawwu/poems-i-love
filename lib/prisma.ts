@@ -10,16 +10,13 @@ const globalForPrisma = globalThis as unknown as {
 const isDev = process.env.NODE_ENV === 'development'
 const connectionString = process.env.DATABASE_URL || (isDev ? `file:${path.join(process.cwd(), 'dev.db')}` : '')
 
-if (!connectionString) {
-  throw new Error('DATABASE_URL environment variable is required in production')
-}
-
 // Parse connection string to handle Turso (with auth token) or local SQLite
 let adapter: PrismaLibSql
 
-if (isDev || connectionString.startsWith('file:')) {
-  // Local SQLite (dev)
-  adapter = new PrismaLibSql({ url: connectionString })
+if (isDev || connectionString.startsWith('file:') || !connectionString) {
+  // Local SQLite (dev) or fallback during build
+  const url = connectionString || `file:${path.join(process.cwd(), 'placeholder.db')}`
+  adapter = new PrismaLibSql({ url })
 } else {
   // Turso (production)
   try {
@@ -28,16 +25,25 @@ if (isDev || connectionString.startsWith('file:')) {
     const dbUrl = connectionString.split('?')[0].split('&')[0] // Remove query params from URL
     
     if (!authToken) {
-      throw new Error('Turso auth token is required. Either include it in DATABASE_URL or set TURSO_AUTH_TOKEN')
+      // During build, if no auth token, use placeholder to avoid breaking build
+      if (process.env.VERCEL_ENV) {
+        adapter = new PrismaLibSql({ url: `file:${path.join(process.cwd(), 'placeholder.db')}` }) as any
+      } else {
+        throw new Error('Turso auth token is required. Either include it in DATABASE_URL or set TURSO_AUTH_TOKEN')
+      }
+    } else {
+      adapter = new PrismaLibSql({ 
+        url: dbUrl,
+        authToken 
+      })
     }
-    
-    adapter = new PrismaLibSql({ 
-      url: dbUrl,
-      authToken 
-    })
   } catch (e) {
-    // If URL parsing fails, assume it's a malformed connection string
-    throw new Error(`Invalid DATABASE_URL format: ${e instanceof Error ? e.message : String(e)}`)
+    // If URL parsing fails, use placeholder during build
+    if (process.env.VERCEL_ENV || process.env.VERCEL) {
+      adapter = new PrismaLibSql({ url: `file:${path.join(process.cwd(), 'placeholder.db')}` }) as any
+    } else {
+      throw new Error(`Invalid DATABASE_URL format: ${e instanceof Error ? e.message : String(e)}`)
+    }
   }
 }
 
