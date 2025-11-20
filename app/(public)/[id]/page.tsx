@@ -4,7 +4,7 @@ import { PoemArticle } from '@/components/PoemArticle'
 
 export async function generateStaticParams() {
   const poems = await getPoems()
-  return poems.map((poem) => ({
+  return poems.map((poem: { id: string }) => ({
     id: poem.id,
   }))
 }
