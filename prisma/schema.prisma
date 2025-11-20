@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Poem {
+  id        String   @id @default(uuid())
+  title     String
+  author    String
+  year      String
+  content   String
+  createdAt DateTime @default(now())
+}
+
