@@ -8,6 +8,7 @@ const globalForPrisma = globalThis as unknown as {
 
 // Use Turso in production, local SQLite in dev
 const isDev = process.env.NODE_ENV === 'development'
+const isBuild = process.env.NEXT_PHASE === 'phase-production-build'
 
 // Clean DATABASE_URL - remove any accidental "DATABASE_URL =" prefix
 let rawConnectionString = process.env.DATABASE_URL || ''
@@ -21,7 +22,11 @@ const connectionString = rawConnectionString || (isDev ? `file:${path.join(proce
 // Parse connection string to handle Turso (with auth token) or local SQLite
 let adapter: PrismaLibSql
 
-if (isDev || (connectionString && connectionString.startsWith('file:'))) {
+// During build phase, use a dummy local DB to allow build to complete
+if (isBuild && !isDev) {
+  console.warn('[Prisma] Build phase detected - using dummy adapter')
+  adapter = new PrismaLibSql({ url: `file:${path.join(process.cwd(), 'build-dummy.db')}` })
+} else if (isDev || (connectionString && connectionString.startsWith('file:'))) {
   // Local SQLite (dev)
   const url = connectionString || `file:${path.join(process.cwd(), 'dev.db')}`
   adapter = new PrismaLibSql({ url })
@@ -34,14 +39,14 @@ if (isDev || (connectionString && connectionString.startsWith('file:'))) {
     const urlObj = new URL(connectionString)
     const authToken = urlObj.searchParams.get('authToken') || process.env.TURSO_AUTH_TOKEN || null
     const dbUrl = connectionString.split('?')[0].split('&')[0] // Remove query params from URL
-    
+
     if (!authToken) {
       throw new Error('Turso auth token is required. Include it in DATABASE_URL as ?authToken=... or set TURSO_AUTH_TOKEN environment variable')
     }
-    
-    adapter = new PrismaLibSql({ 
+
+    adapter = new PrismaLibSql({
       url: dbUrl,
-      authToken 
+      authToken
     })
   } catch (e) {
     if (e instanceof TypeError && e.message.includes('Invalid URL')) {

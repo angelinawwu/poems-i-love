@@ -1,13 +1,8 @@
-import { getPoem, getPoems } from '../../actions'
+import { getPoem } from '../../actions'
 import { notFound } from 'next/navigation'
 import { PoemArticle } from '@/components/PoemArticle'
 
-export async function generateStaticParams() {
-  const poems = await getPoems()
-  return poems.map((poem: { id: string }) => ({
-    id: poem.id,
-  }))
-}
+export const dynamic = 'force-dynamic'
 
 export default async function PoemPage({
   params,

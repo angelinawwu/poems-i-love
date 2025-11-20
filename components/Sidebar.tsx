@@ -16,7 +16,7 @@ export function Sidebar({ poems }: { poems: PoemSummary[] }) {
   return (
     <aside className="w-64 h-screen sticky top-0 border-r border-[var(--muted)] bg-[var(--background)] p-8 flex flex-col overflow-y-auto hidden md:flex">
       <Link href="/" className="mb-12 block">
-        <h1 className="text-3xl font-serif italic hover:opacity-80 transition-opacity text-[var(--foreground)]">
+        <h1 className="text-3xl font-serif hover:opacity-80 transition-opacity text-[var(--foreground)]">
           poems i love
         </h1>
       </Link>

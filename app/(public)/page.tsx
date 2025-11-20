@@ -2,6 +2,8 @@ import { getPoems, getPoem } from '../actions'
 import Link from 'next/link'
 import { PoemArticle } from '@/components/PoemArticle'
 
+export const dynamic = 'force-dynamic'
+
 export default async function HomePage() {
   const poems = await getPoems()
 
