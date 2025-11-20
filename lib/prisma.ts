@@ -8,7 +8,15 @@ const globalForPrisma = globalThis as unknown as {
 
 // Use Turso in production, local SQLite in dev
 const isDev = process.env.NODE_ENV === 'development'
-const connectionString = process.env.DATABASE_URL || (isDev ? `file:${path.join(process.cwd(), 'dev.db')}` : '')
+
+// Clean DATABASE_URL - remove any accidental "DATABASE_URL =" prefix
+let rawConnectionString = process.env.DATABASE_URL || ''
+if (rawConnectionString.includes('DATABASE_URL')) {
+  // Strip out "DATABASE_URL =" if accidentally included
+  rawConnectionString = rawConnectionString.replace(/^DATABASE_URL\s*=\s*/i, '').trim()
+}
+
+const connectionString = rawConnectionString || (isDev ? `file:${path.join(process.cwd(), 'dev.db')}` : '')
 
 // Parse connection string to handle Turso (with auth token) or local SQLite
 let adapter: PrismaLibSql
@@ -37,7 +45,8 @@ if (isDev || (connectionString && connectionString.startsWith('file:'))) {
     })
   } catch (e) {
     if (e instanceof TypeError && e.message.includes('Invalid URL')) {
-      throw new Error(`Invalid DATABASE_URL format. Expected libsql:// URL but got: ${connectionString?.substring(0, 100)}. Current value: ${connectionString ? 'Set but invalid' : 'Not set'}`)
+      const truncated = connectionString.length > 100 ? connectionString.substring(0, 100) + '...' : connectionString
+      throw new Error(`Invalid DATABASE_URL format. The URL appears to be malformed. Make sure in Vercel you only set the VALUE (not "DATABASE_URL = ..."). Got: ${truncated}`)
     }
     throw e
   }
