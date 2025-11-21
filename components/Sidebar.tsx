@@ -39,7 +39,7 @@ export function Sidebar({ poems }: { poems: PoemSummary[] }) {
         })}
       </nav>
       
-      <div className="mt-auto pt-12 border-t border-[var(--muted)]">
+      <div className="fixed bottom-0 left-0 flex justify-left w-64 p-8 border-t border-[var(--muted)]">
         <Link href="/admin" className="text-xs opacity-40 hover:opacity-100 transition-opacity font-sans tracking-widest uppercase">
           Admin Access
         </Link>
