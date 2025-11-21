@@ -14,14 +14,14 @@ export function Sidebar({ poems }: { poems: PoemSummary[] }) {
   const pathname = usePathname()
 
   return (
-    <aside className="w-64 h-screen sticky top-0 border-r border-[var(--muted)] bg-[var(--background)] p-8 flex flex-col overflow-y-auto hidden md:flex">
+    <aside className="w-64 h-screen sticky top-0 border-r border-[var(--muted)] bg-[var(--background)] p-8 flex flex-col hidden md:flex">
       <Link href="/" className="mb-12 block">
         <h1 className="text-3xl font-serif hover:opacity-80 transition-opacity text-[var(--foreground)]">
           poems i love
         </h1>
       </Link>
       
-      <nav className="space-y-6">
+      <nav className="space-y-6 flex-1 overflow-y-auto pb-8">
         {poems.map(poem => {
           const isActive = pathname === `/${poem.id}`
           return (
@@ -39,7 +39,7 @@ export function Sidebar({ poems }: { poems: PoemSummary[] }) {
         })}
       </nav>
       
-      <div className="fixed bottom-0 left-0 bg-[var(--background)] flex justify-left w-64 p-8 border-t border-[var(--muted)]">
+      <div className="mt-auto pt-8 border-t border-[var(--muted)]">
         <Link href="/admin" className="text-xs opacity-40 hover:opacity-100 transition-opacity font-sans tracking-widest uppercase">
           Admin Access
         </Link>
