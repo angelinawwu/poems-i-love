@@ -21,7 +21,7 @@ export function Sidebar({ poems }: { poems: PoemSummary[] }) {
         </h1>
       </Link>
       
-      <nav className="space-y-6 flex-1 overflow-y-auto pb-8">
+      <nav className="space-y-6 flex-1 overflow-y-auto pb-8 no-scrollbar">
         {poems.map(poem => {
           const isActive = pathname === `/${poem.id}`
           return (
