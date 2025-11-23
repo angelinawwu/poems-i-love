@@ -93,16 +93,17 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
                 href={`/${poem.id}`} 
                 className={`
                   block h-full w-12 md:w-16 border-l border-[rgba(0,0,0,0.05)] relative group shrink-0
-                  ${isActive ? 'cursor-default' : 'cursor-pointer hover:brightness-95 hover:translate-x-1'}
+                  ${isActive ? 'cursor-default' : 'cursor-pointer hover:brightness-95 hover:w-14 md:hover:w-20'} 
                   shadow-[6px_0_12px_-4px_rgba(0,0,0,0.15)]
-                  transition-transform duration-300 ease-out
+                  transition-all duration-300 ease-out
                 `}
                 style={{ backgroundColor: color }}
               >
                  <div className="absolute inset-0 opacity-40 mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none"></div>
 
-                 <div className="absolute inset-0 flex flex-col items-center py-8">
-                    <div className="flex-1 flex items-center justify-center w-full overflow-hidden py-4">
+                 {/* Changed items-center to items-end and added padding to pin text to right */}
+                 <div className="absolute inset-0 flex flex-col items-end justify-center px-2 md:px-4.5 py-4 transition-all duration-300 rounded-lg">
+                    <div className="flex-1 flex items-start justify-center w-auto overflow-hidden pt-4 pb-4">
                       <span className={`
                         vertical-text whitespace-nowrap font-serif text-lg tracking-wide transition-colors duration-300
                         ${isActive ? 'text-[var(--foreground)]' : 'text-[rgba(0,0,0,0.6)]'}
