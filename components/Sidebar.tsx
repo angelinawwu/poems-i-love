@@ -60,8 +60,9 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
                 flexBasis: 'auto', 
                 flexShrink: 0, 
                 minWidth: '3rem',
-                // REVERSE z-index order so left tabs cast shadows on right tabs
-                zIndex: isActive ? 50 : (poems.length - index), 
+                // CHANGE: Remove special active z-index to maintain stack order
+                // This ensures the tab to the left is always "above" the active tab, casting its shadow onto the active content
+                zIndex: poems.length - index, 
               }}
             >
               {/* Content Wrapper - Mask */}
@@ -94,8 +95,11 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
                 href={`/${poem.id}`} 
                 className={`
                   block h-full w-12 md:w-16 border-r-[0.5px] border-[var(--foreground-hover)] relative group shrink-0
-                  ${isActive ? 'cursor-default' : 'cursor-pointer hover:brightness-[1.03] hover: text-[var(--foreground-hover)] hover:w-14 md:hover:w-20'} 
+                  ${isActive ? 'cursor-default' : 'cursor-pointer hover:brightness-[1.03] hover:text-[var(--foreground-hover)] hover:w-14 md:hover:w-20'} 
+                  /* Base shadow */
                   shadow-[6px_0_12px_-4px_rgba(0,0,0,0.15)]
+                  /* Hover shadow with higher opacity */
+                  hover:shadow-[6px_0_15px_-2px_rgba(0,0,0,0.2)]
                   transition-all duration-300 ease-out
                 `}
                 style={{ backgroundColor: color }}

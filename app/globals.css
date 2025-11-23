@@ -3,6 +3,7 @@
 :root {
   --background: #fdfbf7;
   --foreground: #43302b;
+  --foreground-hover: #664a44;
   --accent: #c5a065;
   --muted: #e6e2d3;
   --folder: #e8e0d5;
@@ -12,6 +13,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-foreground-hover: var(--foreground-hover);
   --color-accent: var(--accent);
   --color-muted: var(--muted);
   --color-folder: var(--folder);
@@ -50,7 +52,7 @@ h1, h2, h3, h4, h5, h6 {
 .folder-tab.active {
   background-color: var(--folder-active);
   z-index: 10;
-  box-shadow: 0 -4px 12px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.1);
   transform: translateX(-4px);
 }
 
