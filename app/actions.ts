@@ -11,14 +11,20 @@ export async function getPoems() {
   try {
     const poems = await prisma.poem.findMany({
       orderBy: { createdAt: 'desc' },
-      select: { id: true, title: true, author: true }
+      // Select all fields needed for full display
+      select: { 
+        id: true, 
+        title: true, 
+        author: true,
+        year: true,
+        content: true
+      }
     })
     console.log(`[getPoems] Found ${poems.length} poems`)
     return poems
   } catch (e) {
     console.error("[getPoems] Error fetching poems:", e)
     console.error("[getPoems] Error details:", e instanceof Error ? e.message : String(e))
-    // In production, we want to see the error, not silently return empty
     if (process.env.NODE_ENV === 'production') {
       console.error("[getPoems] This error will be visible in Vercel logs")
     }
@@ -46,7 +52,6 @@ export async function createPoem(formData: FormData) {
     return { error: 'Server configuration error' }
   }
 
-  // Verify password
   if (password !== process.env.ADMIN_PASSWORD) {
     console.error("Incorrect password provided")
     return { error: 'Incorrect password' }

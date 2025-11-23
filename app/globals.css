@@ -5,6 +5,8 @@
   --foreground: #43302b;
   --accent: #c5a065;
   --muted: #e6e2d3;
+  --folder: #e8e0d5;
+  --folder-active: #fdfbf7;
 }
 
 @theme inline {
@@ -12,6 +14,8 @@
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
   --color-muted: var(--muted);
+  --color-folder: var(--folder);
+  --color-folder-active: var(--folder-active);
   
   --font-serif: var(--font-serif);
   --font-sans: var(--font-sans);
@@ -34,4 +38,23 @@ h1, h2, h3, h4, h5, h6 {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.folder-tab {
+  position: relative;
+  background-color: var(--folder);
+  border-top: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 -2px 4px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.folder-tab.active {
+  background-color: var(--folder-active);
+  z-index: 10;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05);
+  transform: translateX(-4px);
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
 }
