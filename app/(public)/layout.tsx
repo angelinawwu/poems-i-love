@@ -13,30 +13,34 @@ export default async function PublicLayout({
   // Fetch poems with full content
   const poems = await getPoems()
 
-  // Cast poems to ensure types match (Prisma dates might need handling if not serialized properly by Server Actions? 
-  // Actually Server Actions serialize dates to strings/Dates fine usually, but Sidebar expects strings for year/content)
-  // Our schema has year as String, content as String. CreatedAt is Date.
-  // Sidebar interface Poem expects strings.
-  // We need to map or cast.
-  // Let's trust TS inference or cast if needed.
+  // Cast poems to ensure types match
   const sidebarPoems = poems.map(p => ({
     ...p,
-    // Ensure properties exist (they do from getPoems select)
-    year: p.year || '', // Handle nullable if schema allows, but schema says String.
+    year: p.year || '', 
     content: p.content || ''
   }))
 
   return (
     <div className="flex min-h-screen bg-[var(--background)] text-[var(--foreground)] relative overflow-hidden">
       <PaperTexture 
-        className="fixed inset-0 pointer-events-none z-0 mix-blend-multiply opacity-50"
+        className="fixed inset-0 pointer-events-none z-[60] mix-blend-multiply"
         width="100%"
         height="100%"
         colorBack="#ffffff"
         colorFront="#e3d8cc"
-        contrast={0.2}
-        roughness={0.2}
+        contrast={0.5}
+        roughness={0.5}
+        fiber={0.05}
+        fiberSize={0.19}
+        crumples={0.5}
+        crumpleSize={0.02}
+        folds={0}
+        foldCount={15}
+        drops={0}
+        fade={0}
+        seed={0}
         scale={0.5}
+        fit="cover"
       />
       
       {/* Mobile Nav (Top) */}

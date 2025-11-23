@@ -60,19 +60,20 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
                 flexBasis: 'auto', 
                 flexShrink: 0, 
                 minWidth: '3rem',
-                // Ensure active item is on top so its shadow/content isn't clipped by neighbor
-                zIndex: isActive ? 20 : index,
+                // REVERSE z-index order so left tabs cast shadows on right tabs
+                zIndex: isActive ? 50 : (poems.length - index), 
               }}
             >
               {/* Content Wrapper - Mask */}
               <motion.div 
-                className="h-full bg-[var(--background)] relative z-20 min-w-0 overflow-hidden"
+                className="h-full relative z-20 min-w-0 overflow-hidden"
                 initial={false}
                 // Animate width from 0 to auto to reveal content
                 animate={{ 
                   width: isActive ? 'auto' : 0,
                 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
+                style={{ backgroundColor: color }}
               >
                 {/* Inner Fixed-Width Container */}
                 <div 
@@ -92,8 +93,8 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
               <Link 
                 href={`/${poem.id}`} 
                 className={`
-                  block h-full w-12 md:w-16 border-l border-[rgba(0,0,0,0.05)] relative group shrink-0
-                  ${isActive ? 'cursor-default' : 'cursor-pointer hover:brightness-95 hover:w-14 md:hover:w-20'} 
+                  block h-full w-12 md:w-16 border-r-[0.5px] border-[var(--foreground-hover)] relative group shrink-0
+                  ${isActive ? 'cursor-default' : 'cursor-pointer hover:brightness-[1.03] hover: text-[var(--foreground-hover)] hover:w-14 md:hover:w-20'} 
                   shadow-[6px_0_12px_-4px_rgba(0,0,0,0.15)]
                   transition-all duration-300 ease-out
                 `}
@@ -102,7 +103,7 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
                  <div className="absolute inset-0 opacity-40 mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none"></div>
 
                  {/* Changed items-center to items-end and added padding to pin text to right */}
-                 <div className="absolute inset-0 flex flex-col items-end justify-center px-2 md:px-4.5 py-4 transition-all duration-300 rounded-lg">
+                 <div className="absolute inset-0 flex flex-col items-end justify-center px-2 md:px-4.5 py-4 transition-all duration-300">
                     <div className="flex-1 flex items-start justify-center w-auto overflow-hidden pt-4 pb-4">
                       <span className={`
                         vertical-text whitespace-nowrap font-serif text-lg tracking-wide transition-colors duration-300
@@ -112,8 +113,8 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
                       </span>
                     </div>
                     
-                    <span className="mt-auto text-[10px] font-mono opacity-40 vertical-text mb-4">
-                      {String(index + 1).padStart(2, '0')}
+                    <span className="mt-auto text-[10px] font-mono opacity-40 vertical-text mb-4 uppercase tracking-wider">
+                      {poem.author}
                     </span>
                  </div>
               </Link>
