@@ -55,7 +55,7 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
               className="h-full relative flex flex-row z-0 hover:z-10 transition-all"
               initial={false}
               // Removed flexGrow animation to prevent separation
-              transition={{ duration: 0.5, ease: "easeInOut" }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
               style={{
                 flexBasis: 'auto', 
                 flexShrink: 0, 
@@ -72,7 +72,7 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
                 animate={{ 
                   width: isActive ? 'auto' : 0,
                 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
                 style={{ backgroundColor: color }}
               >
                 {/* Inner Fixed-Width Container */}
