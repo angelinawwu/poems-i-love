@@ -17,7 +17,7 @@ export function PoemArticle({ poem }: PoemArticleProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: [0.215, 0.61, 0.355, 1] }}
-      className="py-12"
+      className="py-6"
     >
       <header className="mb-12 pb-12 border-b border-[var(--muted)]">
         <h1 className="font-serif text-5xl mb-6 text-[var(--foreground)] leading-tight">

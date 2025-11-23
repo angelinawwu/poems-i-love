@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@libsql/client": "^0.8.1",
+    "@paper-design/shaders-react": "^0.0.65",
     "@prisma/adapter-libsql": "^7.0.0",
     "@prisma/client": "^7.0.0",
     "@prisma/driver-adapter-utils": "^7.0.0",
