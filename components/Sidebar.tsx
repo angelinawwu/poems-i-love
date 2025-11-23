@@ -93,8 +93,9 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
                 href={`/${poem.id}`} 
                 className={`
                   block h-full w-12 md:w-16 border-l border-[rgba(0,0,0,0.05)] relative group shrink-0
-                  ${isActive ? 'cursor-default' : 'cursor-pointer hover:brightness-95'}
+                  ${isActive ? 'cursor-default' : 'cursor-pointer hover:brightness-95 hover:translate-x-1'}
                   shadow-[6px_0_12px_-4px_rgba(0,0,0,0.15)]
+                  transition-transform duration-300 ease-out
                 `}
                 style={{ backgroundColor: color }}
               >
