@@ -16,17 +16,32 @@ interface Poem {
 }
 
 // Muted folder palette
-const PALETTE = [
-  '#e6e2d3', // Sage-ish beige
-  '#dcdcdc', // Light Grey
-  '#e0d6c2', // Tan
-  '#d4cfc5', // Stone
-  '#c7c2b6', // Taupe
-  '#e6e6e6', // White-ish
+const BG_PALETTE = [
+  '#BDB297', // Beige
+  '#997B5A', // Tan
+  '#737437', // Sage
+  '#3A1010', // Maroon
+  '#757160', // Stone
+  '#B76039', // Rust
+  '#0B2426', // Navy
 ]
 
-function getFolderColor(id: string, index: number) {
-  return PALETTE[index % PALETTE.length]
+const TEXT_PALETTE = [
+  '#332C12', // Dark Beige
+  '#331700', // Dark Brown
+  '#DFE5D4', // Light Green
+  '#C1B6A2', // Light Red
+  '#0A0E0A', // Dark Grey
+  '#190606', // Dark Orange
+  '#A2BBB8', // Light Blue
+]
+
+function getBgColor(id: string, index: number) {
+  return BG_PALETTE[index % BG_PALETTE.length]
+}
+
+function getTextColor(id: string, index: number) {
+  return TEXT_PALETTE[index % TEXT_PALETTE.length]
 }
 
 export function Sidebar({ poems }: { poems: Poem[] }) {
@@ -46,8 +61,9 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
       <nav className="flex flex-row w-full h-screen overflow-x-auto overflow-y-hidden bg-[#f0ebe0] relative z-10 no-scrollbar">
         {poems.map((poem, index) => {
           const isActive = poem.id === activeId
-          const color = getFolderColor(poem.id, index)
-          
+          const bgColor = getBgColor(poem.id, index)
+          const textColor = getTextColor(poem.id, index)
+
           return (
             <motion.div
               key={poem.id}
@@ -74,7 +90,7 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
                   width: isActive ? 'auto' : 0,
                 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                style={{ backgroundColor: color }}
+                style={{ backgroundColor: bgColor, color: textColor, borderColor: textColor }}
               >
                 {/* Inner Fixed-Width Container */}
                 <div 
@@ -82,7 +98,7 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
                   style={{ width: 'max(60vw, 600px)' }}
                 >
                    <div className="p-8 md:p-16 lg:p-24 min-h-full">
-                      <PoemArticle poem={poem} />
+                      <PoemArticle poem={poem} borderColor={textColor} />
                    </div>
                 </div>
 
@@ -95,14 +111,14 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
                 href={`/${poem.id}`} 
                 className={`
                   block h-full w-12 md:w-16 border-r-[0.5px] border-[var(--foreground-hover)] relative group shrink-0
-                  ${isActive ? 'cursor-default' : 'cursor-pointer hover:brightness-[1.03] hover:text-[var(--foreground-hover)] hover:w-14 md:hover:w-20'} 
+                  ${isActive ? 'cursor-default' : 'cursor-pointer hover:brightness-[1.03] hover:text-brighten-50 hover:w-14 md:hover:w-20'} 
                   /* Base shadow */
                   shadow-[6px_0_12px_-4px_rgba(0,0,0,0.15)]
                   /* Hover shadow with higher opacity */
                   hover:shadow-[6px_0_15px_-2px_rgba(0,0,0,0.2)]
                   transition-all duration-300 ease-out
                 `}
-                style={{ backgroundColor: color }}
+                style={{ backgroundColor: bgColor, color: textColor }}
               >
                  <div className="absolute inset-0 opacity-40 mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none"></div>
 
@@ -111,7 +127,7 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
                     <div className="flex-1 flex items-start justify-center w-auto overflow-hidden pt-4 pb-4">
                       <span className={`
                         vertical-text whitespace-nowrap font-serif text-lg tracking-wide transition-colors duration-300
-                        ${isActive ? 'text-[var(--foreground)]' : 'text-[rgba(0,0,0,0.6)]'}
+                        
                       `}>
                         {poem.title}
                       </span>
