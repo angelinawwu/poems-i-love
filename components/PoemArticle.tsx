@@ -27,7 +27,7 @@ export function PoemArticle({ poem, borderColor }: PoemArticleProps) {
         <h1 className="font-serif text-5xl mb-6 leading-tight">
           {poem.title}
         </h1>
-        <div className="flex items-center gap-6 text-sm uppercase tracking-wider opacity-60">
+        <div className="flex items-center gap-6 text-sm uppercase tracking-wider opacity-70">
           {poem.author && <span>{poem.author}</span>}
           {poem.year && <span>•</span>}
           {poem.year && <span>{poem.year}</span>}

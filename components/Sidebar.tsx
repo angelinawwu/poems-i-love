@@ -83,7 +83,7 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
             >
               {/* Content Wrapper - Mask */}
               <motion.div 
-                className="h-full relative z-20 min-w-0 overflow-hidden"
+                className={`h-full relative z-20 min-w-0 overflow-hidden ${isActive && index > 0 ? '-ml-2' : ''}`}
                 initial={false}
                 // Animate width from 0 to auto to reveal content
                 animate={{ 
@@ -110,8 +110,9 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
               <Link 
                 href={`/${poem.id}`} 
                 className={`
-                  block h-full w-12 md:w-16 border-r-[0.5px] border-[rgba(0,0,0,0.6)] relative group shrink-0
-                  ${isActive ? 'cursor-default' : 'cursor-pointer hover:brightness-110 hover:text-brighten-50 hover:w-14 md:hover:w-20 hover:-mr-2 md:hover:-mr-4'} 
+                  block h-full w-14 md:w-18 border-r-[0.5px] border-[rgba(0,0,0,0.6)] relative group shrink-0 rounded-r-xl
+                  ${index > 0 ? '-ml-2' : ''}
+                  ${isActive ? 'cursor-default' : 'cursor-pointer hover:brightness-110 hover:w-16 md:hover:w-22 hover:-mr-2 md:hover:-mr-4'} 
                   /* Base shadow */
                   shadow-[6px_0_12px_-4px_rgba(0,0,0,0.15)]
                   /* Hover shadow with higher opacity */
@@ -133,7 +134,7 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
                       </span>
                     </div>
                     
-                    <span className="mt-auto text-[10px] font-mono opacity-40 vertical-text mb-4 uppercase tracking-wider">
+                    <span className="mt-auto text-[10px] font-mono opacity-70 vertical-text mb-4 uppercase tracking-wider">
                       {poem.author}
                     </span>
                  </div>
