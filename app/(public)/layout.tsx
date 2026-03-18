@@ -1,12 +1,11 @@
 import { getPoems } from '../actions'
 import { Sidebar } from '@/components/Sidebar'
-import { MobileNav } from '@/components/MobileNav'
 import { PaperTexture } from '@paper-design/shaders-react';
 
 export const dynamic = 'force-dynamic'
 
 export default async function PublicLayout({
-  children,
+  children: _children,
 }: {
   children: React.ReactNode
 }) {
@@ -21,7 +20,7 @@ export default async function PublicLayout({
   }))
 
   return (
-    <div className="flex min-h-screen bg-[var(--background)] text-[var(--foreground)] relative overflow-hidden">
+    <div className="flex min-h-screen bg-[var(--background)] text-[var(--foreground)] relative">
       <PaperTexture 
         className="fixed inset-0 pointer-events-none z-[60] mix-blend-multiply"
         width="100%"
@@ -43,18 +42,8 @@ export default async function PublicLayout({
         fit="cover"
       />
       
-      {/* Mobile Nav (Top) */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-50">
-         <MobileNav poems={sidebarPoems} />
-      </div>
-
-      {/* Mobile Content Wrapper - Renders the active page content passed from routing */}
-      <div className="md:hidden w-full h-screen pt-16 overflow-y-auto p-8 bg-[var(--background)] relative z-10">
-        {children}
-      </div>
-
-      {/* Desktop Layout: Accordion Sidebar handles everything. Children ignored for desktop. */}
-      <div className="hidden md:flex w-full h-screen relative z-10">
+      {/* Sidebar handles both mobile (vertical accordion) and desktop (horizontal accordion) */}
+      <div className="w-full relative z-10">
         <Sidebar poems={sidebarPoems} />
       </div>
     </div>

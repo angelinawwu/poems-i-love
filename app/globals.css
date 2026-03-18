@@ -8,6 +8,7 @@
   --muted: #e6e2d3;
   --folder: #e8e0d5;
   --folder-active: #fdfbf7;
+  --font-serif: "bogart", sans-serif;
 }
 
 @theme inline {
@@ -31,6 +32,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
+  font-weight: 400;
 }
 
 .no-scrollbar::-webkit-scrollbar {
