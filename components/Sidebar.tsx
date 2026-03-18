@@ -153,8 +153,8 @@ export function Sidebar({ poems }: { poems: Poem[] }) {
 
       {/* Mobile: bottom-anchored accordion — tabs at bottom, content expands upward */}
       <nav className="flex lg:hidden fixed inset-0 flex-col z-10 overflow-y-auto no-scrollbar bg-[#f0ebe0]">
-        {/* Header — sits behind tabs, visible when all are closed */}
-        <div className="absolute inset-x-0 top-0 pt-10 text-center z-0 pointer-events-none">
+        {/* Header — scrolls with content, takes up top space */}
+        <div className="shrink-0 pt-10 pb-8 text-center pointer-events-none">
           <div className="font-serif text-2xl text-[var(--foreground)]">poems i love</div>
           <div className="text-[10px] font-mono opacity-70 uppercase tracking-wider leading-snug pt-[3px]">an ongoing compendium</div>
         </div>
